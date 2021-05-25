@@ -41,3 +41,6 @@ $ npm run dev
 ```html
 <style scoped></style>
 ```
+
+##### `create()`
+- 인스턴스가 생성되자마자 호출되는 라이프사이클 훅(hook)
