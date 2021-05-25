@@ -25,3 +25,19 @@ $ npm run dev
 ```html
 <meta name="viewport" content="width=device-width, initial-scale=1">
 ```
+
+##### fontawesome
+```html
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+          integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+```
+
+##### google font ubuntu
+```html
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Ubuntu"/>
+```
+
+##### `scoped`: 컴포넌트 안에서만 유효한 style 속성이 적용된다.
+```html
+<style scoped></style>
+```
