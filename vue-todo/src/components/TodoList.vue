@@ -1,7 +1,7 @@
 <template>
     <div>
         <ul>
-            <li v-for="(todoItem, index) in todoItems" class="shadow">
+            <li v-for="(todoItem, index) in propsdata" class="shadow">
                 <i class="fas fa-check checkBtn" @click="toggleComplete(todoItem, index)"
                    v-bind:class="{checkBtnCompleted: todoItem.completed}"></i>
                 <span v-bind:class="{textCompleted: todoItem.completed}">{{ todoItem.item }}</span>
@@ -15,10 +15,8 @@
 
 <script>
 export default {
-    data: function () {
-        return {
-            todoItems: []
-        }
+    props: {
+        propsdata: Array
     },
     methods: {
         removeTodo: function (todoItem, index) {
@@ -30,17 +28,6 @@ export default {
             todoItem.completed = !todoItem.completed;
             localStorage.removeItem(todoItem.item);
             localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
-        }
-    },
-    created() {
-        if (localStorage.length > 0) {
-            for (let i = 0; i < localStorage.length; i++) {
-                if (localStorage.key(i) !== 'loglevel:webpack-dev-server') {
-                    const str = localStorage.getItem(localStorage.key(i));
-                    const obj = JSON.parse(str);
-                    this.todoItems.push(obj);
-                }
-            }
         }
     }
 }
