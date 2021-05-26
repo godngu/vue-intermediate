@@ -2,7 +2,9 @@
     <div>
         <ul>
             <li v-for="(todoItem, index) in todoItems" class="shadow">
-                {{ todoItem }}
+                <i class="fas fa-check checkBtn" @click="toggleComplete(todoItem, index)"
+                   v-bind:class="{checkBtnCompleted: todoItem.completed}"></i>
+                <span v-bind:class="{textCompleted: todoItem.completed}">{{ todoItem.item }}</span>
                 <span class="removeBtn" @click="removeTodo(todoItem, index)">
                     <i class="fas fa-trash"></i>
                 </span>
@@ -23,13 +25,20 @@ export default {
             console.log('removeTodo', todoItem, index)
             localStorage.removeItem(todoItem);
             this.todoItems.splice(index, 1);
+        },
+        toggleComplete: function (todoItem, index) {
+            todoItem.completed = !todoItem.completed;
+            localStorage.removeItem(todoItem.item);
+            localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
         }
     },
     created() {
         if (localStorage.length > 0) {
             for (let i = 0; i < localStorage.length; i++) {
                 if (localStorage.key(i) !== 'loglevel:webpack-dev-server') {
-                    this.todoItems.push(localStorage.key(i));
+                    const str = localStorage.getItem(localStorage.key(i));
+                    const obj = JSON.parse(str);
+                    this.todoItems.push(obj);
                 }
             }
         }
@@ -37,7 +46,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 ul {
     list-style-type: none;
     padding-left: 0px;
