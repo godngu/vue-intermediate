@@ -42,5 +42,25 @@ $ npm run dev
 <style scoped></style>
 ```
 
-##### `create()`
+##### create()
 - 인스턴스가 생성되자마자 호출되는 라이프사이클 훅(hook)
+
+
+### Modal
+- [모달 컴포넌트 Example](https://kr.vuejs.org/v2/examples/modal.html)
+
+#### slot
+- `slot`이 포함된 컴포넌트를 등록한 컴포넌트에서 재정의 할 수 있다.
+
+Modal.vue
+```html
+<slot name="header">default header</slot>
+```
+
+TodoInput.vue 에서 header 내용 재정의
+```html
+<slot name="header">경고!!</slot>
+```
+
+### Transitions & Animation
+- [가이드](https://kr.vuejs.org/v2/guide/transitions.html)
