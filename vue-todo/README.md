@@ -255,3 +255,60 @@ this.$store.commit('sum', {
     message: 'hi'
 })
 ```
+
+#### actions
+- 비동기 처리 로직을 선언하는 메서드, 비동기 로직을 담당하는 mutations
+- 모든 비동기 처리는 `actions`에 선언한다.
+- `dispatch("action 명")`
+
+##### 예제1
+- 2초 후에 카운트를 증가시킨다.
+```javascript
+// store.js
+state: {counter: 0},
+mutations: {
+    addCounter(state) {
+        state.counter++;
+    }
+},
+actions: {
+    delayAddCounter(context) {
+        setTimeout(() => context.commit('addCounter'), 2000);
+    }
+}
+
+// App.vue
+methods: {
+    incrementCount() {
+        this.$store.dispatch('delayAddCounter');
+    }
+}
+```
+
+##### 예제2
+- 비동기로 api를 호출하여 상품정보를 가져온 후, `mutations`를 호출하여 데이터를 `set` 한다.
+```javascript
+// store.js
+mutations: {
+    setData(state, fetchData) {
+        state.product = fetchedData;
+    }
+},
+actions: {
+    fetchProductData(context) {
+        return axios.get('https://api.domain.com/products/1')
+                    .then(response => context.commit('setData', response));
+    }
+}
+
+// App.vue
+methods: {
+    getProduct() {
+        this.$store.dispatch(fetchProductData);
+    }
+}
+```
+
+##### 왜 비동기 처리 로직은 actions에 선언해야 할까?
+- 언제 어느 컴포넌트에서 해당 state를 호출하고, 변경했는지 확인하기가 어렵다.
+- state 값의 변화를 추적하기 어렵기 때문에 **mutations 속성에는 동기 처리 로직만 넣어야 한다.**
