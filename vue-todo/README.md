@@ -423,3 +423,33 @@ mutations: {
 ```html
 <button @click="delayClickBtn">popup message</button>
 ```
+
+### 프로젝트 구조화와 모듈화 방법
+```javascript
+// store.js
+import Vue from 'vue'
+import Vuex from 'vuex'
+
+export const store = new Vuex.Store({
+    state: {},
+    getters: {},
+    mutations: {},
+    actions: {}
+})
+```
+
+`import`와 `export`를 이용하여 속성별로 모듈화
+```javascript
+import Vue from 'vue'
+import Vuex from 'vuex'
+import * as getters from 'store/getters.js'
+import * as mutations from 'store/mutations.js'
+import * as actions from 'store/actions.js'
+
+export const store = new Vuex.Store({
+    state: {},
+    getters: getters,
+    mutations: mutations,
+    actions: actions
+})
+```
