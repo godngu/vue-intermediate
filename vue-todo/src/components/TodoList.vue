@@ -6,8 +6,8 @@
                    v-bind:class="{checkBtnCompleted: todoItem.completed}"></i>
                 <span v-bind:class="{textCompleted: todoItem.completed}">{{ todoItem.item }}</span>
                 <span class="removeBtn" @click="removeTodo(todoItem, index)">
-                        <i class="fas fa-trash"></i>
-                    </span>
+                    <i class="fas fa-trash"></i>
+                </span>
             </li>
         </transition-group>
     </div>
@@ -19,10 +19,10 @@ export default {
         propsdata: Array
     },
     methods: {
-        removeTodo: function (todoItem, index) {
+        removeTodo(todoItem, index) {
             this.$emit('removeTodoItem', todoItem, index);
         },
-        toggleComplete: function (todoItem, index) {
+        toggleComplete(todoItem, index) {
             this.$emit('toggleComplete', todoItem, index);
         }
     }
