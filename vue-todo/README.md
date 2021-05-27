@@ -103,20 +103,123 @@ log('hi');
 
 
 ## Vuex
-
----
 - 상태 관리 패턴
 - 복잡한 애플리케이션의 컴포넌트들을 효율적으로 관리하는 라이브러리
 - React의 Flux 패턴에 기인함
+- 단방향 데이터 흐름
 - 주요 속성
     - `state`, `getters`, `mutations`, `actions`
     - (`data`, `computed`, `methods`, `async methods` 와 대응된다.)
 
 ### Flux 패턴
 - MVC 패턴의 복잡한 데이터 흐름 문제를 해결하기 위한 개발 패턴
-```mermaid
-graph LR
-    Action --> Dispatcher;
-    Dispatcher --> Model;
-    Model --> View;
+- 단방향 데이터 흐름
+```text
+    Action --> Dispatcher --> Model --> View
+```
+1. `action` : 화면에서 발생하는 이벤트 또는 사용자 입력
+2. `dispatcher` : 데이터를 변경하는 방법, 메서드
+3. `model` : 화면에 표시할 데이터
+4. `view` : 사용자 화면
+
+
+### MVC 패턴
+```text
+Controller -> Model <--> View
+```
+- `Model`과 `View` 간에 양방향 데이터 통시능ㄹ 한다.
+- 기능 추가 및 변경에 따라 생기는 문제점을 예측하기 어렵다.
+
+### Vuex로 해결할 수 있는 문제
+1. MVC 패턴에서 발생하는 구조적 오류
+2. 컴포넌트 간 데이터 전달 명시
+3. 여러 개의 컴포넌트에서 같은 데이터를 업데이트 할 때 동기화 문제
+
+### Vuex 컨셉
+- `state`
+    - 컴포넌트 간에 공유하는 데이터
+    - `data()`
+- `view`
+    - 데이터를 표시하는 화면
+    - `template`
+- `action`
+    - 사용자의 입력에 따라 데이터를 변경
+    - 특정 데이터를 변경, 이벤트를 발생
+    - `methods`
+
+### Vuex 설치하기
+- 프로젝트 내에서 실행
+```shell
+$ npm install vuex --save
+```
+
+### 적용??
+```javascript
+// src/store/store.js
+import Vue from 'vue'
+import Vuex from 'vuex'
+
+// vue 플러그인을사용한다.
+// 전역으로 사용하는 특정 기능을 추가하고 싶을때 사용한다.
+Vue.use(Vuex);
+
+export const store = new Vuex.Store({
+    // ...
+});
+
+// [Vuex store 등록]
+// main.js
+import { store} from './store/store'
+
+new Vue({
+    el: '#app',
+    store,  // 추가한다.
+    render: h => h(App)
+})
+```
+
+### Vuex 기술요소
+- `state`: 여러 컴포넌트에 공유되는 데이터 (`data`)
+- `getters`: 연산된 state 값을 접근하는 속성 (`computed`)
+- `mutations`: state 값을 변경하는 이벤트 로직, 메소드 (`methods`)
+- `actions`: 비동기 처리 로직을 선언하는 메소드 (`async methods`)
+
+#### state
+```javascript
+// Vue
+data: {
+    message: 'hello'
+}
+
+// vuex
+state: {
+    message: 'hello'
+}
+```
+
+```html
+<!-- Vue -->
+<p>{{ message }}</p>
+
+<!-- Vuex -->
+<p>{{ this.$store.state.message }}</p>
+```
+
+#### getters
+- state 값을 접근하는 속성이자 `computed()`처럼 미리 연산된 값을 접근하는 속성
+- helper 함수를 통해서 축약이 가능하다.
+```javascript
+// store.js
+state: {
+    num: 10
+},
+getters: {
+    getNumber(state) {
+        return state.num;
+    }
+}
+```
+
+```html
+<p>{{ this.$store.getter.getNumber }}</p>
 ```
