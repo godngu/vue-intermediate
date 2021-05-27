@@ -223,3 +223,35 @@ getters: {
 ```html
 <p>{{ this.$store.getter.getNumber }}</p>
 ```
+
+#### mutations
+- state의 값을 변경할 수 있는 유일한 방법이자 메서드
+- `commit()`으로 동작시킨다.
+```javascript
+// store.js
+state: { num: 10},
+mutations: {
+    sumNumbers(state, n) {
+        return state.num + n;
+    }
+}
+
+// App.vue
+this.$store.commit('sumNumbers', 5);
+```
+
+##### 인자로 객체 전달
+```javascript
+state: { num: 10},
+mutations: {
+    sum(state, payload) {
+        console.log(payload.message)
+        return state.num += n;
+    }
+}
+
+this.$store.commit('sum', {
+    n: 5,
+    message: 'hi'
+})
+```
