@@ -22,12 +22,6 @@ export default {
             removeTodo: 'removeOneItem',
             toggleComplete: 'toggleOneCompleted'
         })
-        // removeTodo(todoItem, index) {
-        //     this.$store.commit('removeOneItem', {todoItem, index});
-        // },
-        // toggleComplete(todoItem, index) {
-        //     this.$store.commit('toggleOneCompleted', {todoItem, index});
-        // }
     },
     computed: {
         ...mapGetters(['storedTodoItems'])
