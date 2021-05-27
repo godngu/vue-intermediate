@@ -312,3 +312,114 @@ methods: {
 ##### 왜 비동기 처리 로직은 actions에 선언해야 할까?
 - 언제 어느 컴포넌트에서 해당 state를 호출하고, 변경했는지 확인하기가 어렵다.
 - state 값의 변화를 추적하기 어렵기 때문에 **mutations 속성에는 동기 처리 로직만 넣어야 한다.**
+
+
+## Helper
+- 각 속성들을 더 쉽게 사용하는 방법
+    - state -> mapState
+    - getters -> mapGetters
+    - mutations -> mapMutations
+    - actions -> mapActions
+
+#### 사용법
+```javascript
+// App.vue
+import { mapState } from 'vuex
+import { mapGetters } from 'vuex
+import { mapMutations } from 'vuex
+import { mapActions } from 'vuex
+
+export default {
+    computed() { ...mapState(['num']), ...mapGetters(['countedNum']) },
+    methods: { ...mapMutations(['clickBtn']), ...mapActions(['asyncClickBtn']) }
+}
+```
+(`...` Object Spread Operator)
+
+### mapState
+- state 속성을 Vue component에 더 쉽게 연결해준다.
+```javascript
+// App.vue
+import { mapState } from 'vuex'
+
+computed() {
+    ...mapState(['num'])
+    // 기존 방식
+    // num() { return this.$store.state.num; }
+}
+
+// store.js
+state: {
+    num: 10
+}
+```
+```html
+<!-- 기존 방식: <p>{{ this.$store.state.num }}</p> -->
+<p>{{ this.num }}</p>
+```
+
+### mapGetters
+```javascript
+// App.vue
+import { mapGetters } from 'vuex'
+
+computed() { ...mapGetters(['reverseMessage']) }
+
+// store.js
+getters: {
+    reverseMessage(state) {
+        return state.msg.split('').reverse().join('');
+    }
+}
+```
+```html
+<!-- 기존 방식: <p>{{ this.$store.getters.reverseMessage }}</p> -->
+<p>{{ this.reverseMessage }}</p>
+```
+
+### mapMutations
+```javascript
+// App.vue
+import { mapMutations } from 'vuex'
+
+methods: {
+    ...mapMutations(['clickBtn']),
+    authLogin() {},
+    displayTable() {}
+}
+
+// store.js
+mutations: {
+    clickBtn(state) {
+        alert(state.msg);
+    }
+}
+```
+```html
+<button @click="clickBtn">popup message</button>
+```
+
+### mapActions
+```javascript
+// App.vue
+import { mapActions } from 'vuex'
+
+methods: {
+    ...mapActions(['delayClickBtn'])
+}
+
+// store.js
+actions: {
+    delayClickBtn(context) {
+        setTimeout(() => context.commit('clickBtn'), 2000);
+    }
+},
+mutations: {
+    clickBtn(state) {
+        alert(state.msg);
+    }
+}
+```
+```html
+<button @click="delayClickBtn">popup message</button>
+```
